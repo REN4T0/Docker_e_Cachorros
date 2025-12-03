@@ -21,8 +21,16 @@
             ':gender' => $gender
         ]);
 
-        echo json_encode("Cachorro cadastrado com sucesso!");
+        echo json_encode([
+            "code" => "200",
+            "status" => "success"
+        ]);
+        
     }catch(Exception $err){
-        echo json_encode("Ocorreu um erro - $err");
+        echo json_encode([
+            "code" => "500",
+            "status" => "server_error",
+            "error" => $err
+        ]);
     }
 ?>

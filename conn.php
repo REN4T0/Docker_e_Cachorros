@@ -14,10 +14,4 @@
     ];
 
     $pdo = new PDO($dsn, $user, $pass, $options);
-
-    // if($pdo){
-    //     echo "funfou";
-    // } else {
-    //     echo "sujou";
-    // }
 ?>

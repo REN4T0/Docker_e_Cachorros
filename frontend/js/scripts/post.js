@@ -6,7 +6,7 @@ export class Dog {
     }
 
     static async post(data){
-        console.log(data);
+        // console.log(data);
         const REQ = await fetch(`http://${window.location.hostname}:${window.location.port}/backend/php/create.php`, {
             "method":"POST",
             headers : {
@@ -16,6 +16,7 @@ export class Dog {
         });
 
         const RES = await REQ.json();
-        console.log(RES);
+        return RES;
+
     }
 }

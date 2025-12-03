@@ -1,6 +1,7 @@
 import { Dog } from "../scripts/post.js";
+import { get } from "../scripts/get.js";
 
-document.addEventListener('click', e => {
+document.addEventListener('click', async e => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -12,12 +13,14 @@ document.addEventListener('click', e => {
 
         for(let input of INPUTS) DOG_DATA.push(input.value);
 
-        console.log(DOG_DATA);
         const DOG = new Dog(DOG_DATA);
-        console.log(DOG);
-        
         const RESPONSE = Dog.post(DOG);
+        console.log(RESPONSE);
+        
+        if(RESPONSE.code == "200"){
+            console.log("Cachorro cadastrado com sucesso.");
+        } else {
+            console.log(`ERRO - ${RESPONSE}`);
+        }
     }
 });
-
-console.log(window.location.hostname, window.location.port);
