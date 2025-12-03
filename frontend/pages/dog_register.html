@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/dog_register.css">
+    <script type="module" src="../js/services/get_form.js" defer></script>
+    <title>Cadastrar cachorro</title>
+</head>
+<body>
+    <form action="">
+        <a href="../../index.html">Voltar</a>
+        <h1>Cadastrar cachorro</h1>
+        <fieldset>
+            <legend>Raça</legend>
+            <input type="text" name="breed" id="breed" placeholder="Ex: Golden Retriever" class="dog_info">
+        </fieldset>
+
+        <fieldset>
+            <legend>Apelido</legend>
+            <input type="text" name="surname" id="surname" placeholder="Ex: Leônidas" class="dog_info">
+        </fieldset>
+
+        <fieldset>
+            <legend>Gênero</legend>
+            <select name="gender" id="gender" class="dog_info">
+                <option hidden>Informe o gênero do cachorro</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+        </fieldset>
+
+        <button type="submit" class="send">Cadastrar cachorro</button>
+    </form>
+</body>
+</html>

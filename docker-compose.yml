@@ -1,0 +1,13 @@
+services:
+  web-app:
+    build: .
+    container_name: petshop
+    ports:
+    - "8080:80"
+    volumes:
+    - ${PWD}:/var/www/html
+    networks:
+    - rede_de_conexao
+networks:
+  rede_de_conexao:
+    external: true
