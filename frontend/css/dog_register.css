@@ -6,7 +6,7 @@
 
 form {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -37,6 +37,17 @@ button {
     border: none;
     background-color: #ffa200;
     cursor: pointer;
+}
+
+table {
+    width: 100%;
+    position: relative;
+    top: 27vw;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 
 button:hover{

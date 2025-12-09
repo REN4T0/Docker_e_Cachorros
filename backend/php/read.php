@@ -9,12 +9,10 @@
     $sql = "SELECT * FROM dogs";
     $result = $pdo->query($sql);
 
-    $response = [
-        "data" => []
-    ];
+    $response = [];
     
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
-        array_push($response["data"], [
+        array_push($response, [
             "id" => $row['id'],
             "breed" => $row['breed'],
             "surname" => $row['surname'],
