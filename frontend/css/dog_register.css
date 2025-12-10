@@ -39,10 +39,23 @@ button {
     cursor: pointer;
 }
 
+button.delete, button.edit{
+    border-radius: 0;
+    width: 100%;
+}
+
+button.delete{
+    background-color: #ae0000;
+}
+
+button.edit{
+    background-color: #0064c8;
+}
+
 table {
     width: 100%;
     position: relative;
-    top: 27vw;
+    top: 25rem;
 }
 
 table, th, td {
@@ -50,10 +63,14 @@ table, th, td {
     border-collapse: collapse;
 }
 
+td {
+    text-align: center;
+}
+
 button:hover{
-    background-color: #ffa200d5;
+    opacity: 0.8;
 }
 
 button:active {
-    background-color: #ffa20099;
+    opacity: 0.5;
 }

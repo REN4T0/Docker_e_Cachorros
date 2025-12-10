@@ -1,5 +1,6 @@
 import { Dog } from "../scripts/post.js";
 import { get } from "../scripts/get.js";
+import { del } from "../scripts/delete.js";
 
 function clean_table(){
     const TABLE = document.querySelector("table");
@@ -18,6 +19,7 @@ async function show_dogs(){
     
     for (let row of DOG_ROWS){
         let table_row = document.createElement('tr');
+        let c = 0;
         
         for(let dog_index in row){
             let table_data = document.createElement('td');
@@ -25,7 +27,29 @@ async function show_dogs(){
             table_row.appendChild(table_data);
         }
 
-        table_row.ap
+        do {
+            let td_button = document.createElement("td");
+            let tbutton = document.createElement("button");
+            let tbimg = document.createElement("img");
+
+            if(c === 0){
+                tbimg.src = `${window.location.origin}/frontend/icons/delete.svg`;
+                tbimg.classList.add("delete");
+                tbutton.classList.add("delete");
+            } else {
+                tbimg.src = `${window.location.origin}/frontend/icons/edit.svg`; 
+                tbimg.classList.add("edit");
+                tbutton.classList.add("edit");
+            }
+
+            tbimg.id = row.id;
+            tbutton.id = row.id;
+            tbutton.appendChild(tbimg);
+            td_button.appendChild(tbutton);
+            table_row.appendChild(td_button);
+
+            c++;
+        } while (c <= 1);
     
         TABLE_BODY.appendChild(table_row);
     }
@@ -51,14 +75,29 @@ document.addEventListener('click', async e => {
 
         const DOG = new Dog(DOG_DATA);
         const RESPONSE = await Dog.post(DOG);
-        console.log(RESPONSE);
         
         if(RESPONSE.code == "200"){
-            console.log("Cachorro cadastrado com sucesso.");
+            console.log(RESPONSE);
             clean_table();
             await show_dogs();
         } else {
-            console.log(`ERRO - ${RESPONSE}`);
+            console.log(RESPONSE);
         }
+    }
+
+    if(el.classList.contains("delete")){
+        const RESPONSE = await del(el.id);
+        console.log(RESPONSE);
+
+        if(RESPONSE.code === "200"){
+            clean_table();
+            await show_dogs();
+        } else {
+            console.log(RESPONSE);
+        }
+    }
+
+    if(el.classList.contains("edit")){
+
     }
 });
