@@ -24,14 +24,14 @@
         echo json_encode([
             "code" => "200",
             "status" => "success",
-            "msg" => "Cachorro cadastrado com sucess"
+            "msg" => "Cachorro cadastrado com sucesso"
         ]);
         
     }catch(Exception $err){
         echo json_encode([
             "code" => "500",
             "status" => "server_error",
-            "msg" => "Não foi possível cadastrar no banco de dados"
+            "msg" => "Não foi possível cadastrar no banco de dados",
             "error" => $err
         ]);
     }

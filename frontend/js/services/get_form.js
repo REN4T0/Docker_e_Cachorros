@@ -25,7 +25,9 @@ async function show_dogs(){
         
         for(let dog_index in row){
             let table_data = document.createElement('td');
+            table_data.classList = dog_index;
             table_data.innerText = row[dog_index];
+            table_row.id = `dog${row.id}`;
             table_row.appendChild(table_data);
         }
 
@@ -100,7 +102,7 @@ document.addEventListener('click', async e => {
     }
 
     if(el.classList.contains("edit")){
-        open_modal();
+        open_modal(el.id);
     }
 
     if(el.classList.contains("close") || el.classList.contains("close_icon")){

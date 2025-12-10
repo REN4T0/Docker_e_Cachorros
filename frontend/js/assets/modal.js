@@ -1,5 +1,6 @@
-export function open_modal(){
+export function open_modal(id){
     const INPUT_LABELS = ["Raça", "Apelido"];
+    const INPUT_CLASSES = ["breed", "surname"];
     const SLCT_OPTS = ["M", "F"];
 
     const BODY = document.querySelector("body");
@@ -28,6 +29,8 @@ export function open_modal(){
 
         const INPUT = document.createElement("input");
         INPUT.classList.add("updated_dog_info");
+        console.log(document.querySelector(`#${id} td.${INPUT_CLASSES[i]}`)); 
+        INPUT.value = document.querySelector(`#${id} .${INPUT_CLASSES[i]}`).textContent;
 
         MODAL_FORM.appendChild(LABEL);
         MODAL_FORM.appendChild(INPUT);
