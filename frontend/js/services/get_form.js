@@ -1,6 +1,8 @@
 import { Dog } from "../scripts/post.js";
 import { get } from "../scripts/get.js";
 import { del } from "../scripts/delete.js";
+import { open_modal } from "../assets/modal.js";
+import { close_modal } from "../assets/modal.js";
 
 function clean_table(){
     const TABLE = document.querySelector("table");
@@ -98,6 +100,10 @@ document.addEventListener('click', async e => {
     }
 
     if(el.classList.contains("edit")){
+        open_modal();
+    }
 
+    if(el.classList.contains("close") || el.classList.contains("close_icon")){
+        close_modal();
     }
 });
