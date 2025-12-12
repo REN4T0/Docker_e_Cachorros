@@ -5,8 +5,17 @@ export class Dog {
         this.gender = dog_data[2]
     }
 
-    static async post(data){
-        const REQ = await fetch(`http://${window.location.hostname}:${window.location.port}/backend/php/create.php`, {
+    static async post(data, operation){
+        let route;
+        
+        if(operation === "post"){
+            route = `http://${window.location.hostname}:${window.location.port}/backend/php/create.php`;
+         } else {
+            route = `http://${window.location.hostname}:${window.location.port}/backend/php/update.php`;
+            data.id 
+         }
+
+        const REQ = await fetch(route, {
             "method":"POST",
             headers : {
                 "Content-Type":"application/json"
