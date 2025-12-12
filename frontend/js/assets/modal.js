@@ -60,8 +60,6 @@ export function open_modal(id) {
         }
     }
 
-    
-
     const UPDATE_BTN = document.createElement("button");
     UPDATE_BTN.classList.add("update");
     UPDATE_BTN.innerText = "Atualizar";
