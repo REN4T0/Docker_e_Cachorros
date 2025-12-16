@@ -7,7 +7,10 @@ services:
     volumes:
     - ${PWD}:/var/www/html
     networks:
-    - rede_de_conexao
+    - database
+    - applications
 networks:
-  rede_de_conexao:
+  database:
+    external: true
+  applications:
     external: true

@@ -1,11 +1,19 @@
 @import url("./dog_register.css");
 
+h1 {
+    text-align: center;
+}
+
 button {
     padding: 1rem 5rem 1rem 5rem;
     font-size: 2rem;
 }
 
-a {
+div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+
     position: absolute;
     top: 50%;
     left: 50%;

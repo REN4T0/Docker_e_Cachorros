@@ -1,7 +1,7 @@
 <?php
     include_once("../../conn.php");
 
-    header("Access-Control-Allow-Origin: http://localhost:80");
+    header("Access-Control-Allow-Origin: http://localhost:8080");
     header("Access-Control-Allow-Method: GET");
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json;");
