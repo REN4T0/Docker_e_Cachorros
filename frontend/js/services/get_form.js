@@ -4,6 +4,8 @@ import { open_modal } from "../assets/modal.js";
 import { close_modal } from "../assets/modal.js";
 import { show_dogs } from "../assets/table.js";
 import { clean_table } from "../assets/table.js";
+import { search_dogs } from "../scripts/search.js";
+import { get } from "../scripts/get.js";
 
 // function validate_form(unval_data) {
     // if (unval_data.includes("", null, undefined)) {
@@ -18,8 +20,9 @@ import { clean_table } from "../assets/table.js";
 
 // Assim que a página carregar, os registros do banco de dados serão consultado e exibidos na tela.
 window.addEventListener("load", async () => {
-    await show_dogs();
-})
+    clean_table();
+    show_dogs(await get());
+});
 
 document.addEventListener('click', async e => {
     e.preventDefault();
@@ -46,7 +49,7 @@ document.addEventListener('click', async e => {
 
                 // Limpando a tabela e gerando novamente.
                 clean_table();
-                await show_dogs();
+                show_dogs();
 
             } else {
                 console.log(RESPONSE);
@@ -65,7 +68,7 @@ document.addEventListener('click', async e => {
         if (RESPONSE.code === "200") {
             console.log(RESPONSE);
             clean_table();
-            await show_dogs();
+            show_dogs();
         } else {
             console.log(RESPONSE);
         }
@@ -95,6 +98,19 @@ document.addEventListener('click', async e => {
             close_modal();
         } else {
             console.log(RESPONSE);
+        }
+    }
+
+    if(el.classList.contains("search")){
+        const SEARCH_ITEM = document.querySelector("#search").value;
+        const SEARCH_RES = await search_dogs({search_item: SEARCH_ITEM});
+
+        if(SEARCH_RES.length > 0){
+            console.log(SEARCH_RES);
+            clean_table();
+            show_dogs(SEARCH_RES);
+        } else {
+            clean_table();
         }
     }
 });

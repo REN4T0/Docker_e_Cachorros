@@ -41,7 +41,7 @@ export function open_modal(id) {
 
             for (let c in SLCT_OPTS) {
                 const OPT = document.createElement('option');
-                SLCT_OPTS[c] == "M" ? OPT.innerText = "Masculino" : OPT.innerText = "Feminino";
+                SLCT_OPTS[c] == "M" ? OPT.innerText = "Macho" : OPT.innerText = "Fêmea";
                 OPT.value = SLCT_OPTS[c];
 
                 if (OPT.value == document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent) {

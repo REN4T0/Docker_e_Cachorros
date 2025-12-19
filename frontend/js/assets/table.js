@@ -1,4 +1,4 @@
-import { get } from "../scripts/get.js";
+// import { get } from "../scripts/get.js";
 
 export function clean_table(){
     const TABLE = document.querySelector("table");
@@ -9,13 +9,11 @@ export function clean_table(){
     }
 }
 
- export async function show_dogs(){
+ export function show_dogs(dogRows){
     const TABLE = document.querySelector("table");
     const TABLE_BODY = document.createElement("tbody");
-
-    const DOG_ROWS = await get();
     
-    for (let row of DOG_ROWS){
+    for (let row of dogRows){
         let table_row = document.createElement('tr');
         let c = 0;
         
