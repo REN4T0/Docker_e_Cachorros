@@ -1,27 +1,25 @@
+// Funções de interação com o banco de dados
 import { Dog } from "../scripts/post.js";
 import { del } from "../scripts/delete.js";
+import { get } from "../scripts/get.js";
+import { search_dogs } from "../scripts/search.js";
+// Funções de exibição de dados
 import { open_modal } from "../assets/modal.js";
 import { close_modal } from "../assets/modal.js";
 import { show_dogs } from "../assets/table.js";
 import { clean_table } from "../assets/table.js";
-import { search_dogs } from "../scripts/search.js";
-import { get } from "../scripts/get.js";
-
-// function validate_form(unval_data) {
-    // if (unval_data.includes("", null, undefined)) {
-    //     throw new Error("Não é possível cadastrar valores vazios.");
-    // } else {
-    //     return {
-    //         code: "200",
-    //         msg: "Dados válidos"
-    //     }
-    // }
-// }
+// Funções de validações
+import { checkNullForm } from "./validations.js";
 
 // Assim que a página carregar, os registros do banco de dados serão consultado e exibidos na tela.
 window.addEventListener("load", async () => {
     clean_table();
-    show_dogs(await get());
+
+    try {
+        show_dogs(await get());
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 document.addEventListener('click', async e => {
@@ -38,7 +36,7 @@ document.addEventListener('click', async e => {
         for (let input of INPUTS) DOG_DATA.push(input.value); // Iterando sobre cada array do formulário de cadastro e inserindo o valor no array DOG_DATA
 
         try {
-            // validate_form();
+            checkNullForm(DOG_DATA);
 
             // Criando uma instância do cachorro cadastrado e enviando para a função estática que vai mandar os dados para o banco
             const DOG = new Dog(DOG_DATA);
@@ -49,11 +47,10 @@ document.addEventListener('click', async e => {
 
                 // Limpando a tabela e gerando novamente.
                 clean_table();
-                show_dogs();
+                show_dogs(await get());
 
             } else {
                 console.log(RESPONSE);
-
             }
 
         } catch (err) {
@@ -68,7 +65,7 @@ document.addEventListener('click', async e => {
         if (RESPONSE.code === "200") {
             console.log(RESPONSE);
             clean_table();
-            show_dogs();
+            show_dogs(await get());
         } else {
             console.log(RESPONSE);
         }
@@ -84,28 +81,33 @@ document.addEventListener('click', async e => {
 
         for (let input of INPUTS) DOG_DATA.push(input.value);
 
-        let id = DOG_DATA.shift(); // Presenrvando o ID do registro
-
-        const NEW_DOG = new Dog(DOG_DATA); // Criando uma instância dos dados do cachorro que será atualizado
-        NEW_DOG.id = id; // Inserindo o ID na instância gerada
-
-        const RESPONSE = await Dog.post(NEW_DOG, "update"); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
-
-        if (RESPONSE.code == "200") {
-            console.log(RESPONSE);
-            clean_table();
-            show_dogs();
-            close_modal();
-        } else {
-            console.log(RESPONSE);
+        try{
+            checkNullForm(DOG_DATA);
+            const ID = DOG_DATA.shift(); // Preservando o ID do registro
+    
+            const NEW_DOG = new Dog(DOG_DATA); // Criando uma instância dos dados do cachorro que será atualizado
+            NEW_DOG.id = ID; // Atualizando o objeto, inserindo o ID na instância gerada
+    
+            const RESPONSE = await Dog.post(NEW_DOG, "update"); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
+    
+            if (RESPONSE.code == "200") {
+                console.log(RESPONSE);
+                close_modal();
+                clean_table();
+                show_dogs(await get());
+            } else {
+                console.log(RESPONSE);
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
-    if(el.classList.contains("search")){
+    if (el.classList.contains("search")) {
         const SEARCH_ITEM = document.querySelector("#search").value;
-        const SEARCH_RES = await search_dogs({search_item: SEARCH_ITEM});
+        const SEARCH_RES = await search_dogs({ search_item: SEARCH_ITEM });
 
-        if(SEARCH_RES.length > 0){
+        if (SEARCH_RES.length > 0) {
             console.log(SEARCH_RES);
             clean_table();
             show_dogs(SEARCH_RES);

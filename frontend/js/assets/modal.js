@@ -1,5 +1,5 @@
 export function open_modal(id) {
-    const INPUT_LABELS = ["ID", "Raça", "Apelido", "Gênero"];
+    const INPUT_LABELS = ["", "Raça", "Apelido", "Gênero"];
     const INPUT_CLASSES = ["id", "breed", "surname", "gender"];
     const SLCT_OPTS = ["M", "F"];
 
@@ -32,6 +32,7 @@ export function open_modal(id) {
         INPUT.value = document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent;
 
         if(INPUT_CLASSES[i] === "id") INPUT.setAttribute("readonly", "true");   
+        if(INPUT_CLASSES[i] === "id") INPUT.setAttribute("hidden", "true");   
 
         if (i == 3) {
             const SLCT_LABEL = document.createElement("label");

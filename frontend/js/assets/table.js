@@ -12,7 +12,7 @@ export function clean_table(){
  export function show_dogs(dogRows){
     const TABLE = document.querySelector("table");
     const TABLE_BODY = document.createElement("tbody");
-    
+
     for (let row of dogRows){
         let table_row = document.createElement('tr');
         let c = 0;
