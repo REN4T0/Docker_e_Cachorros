@@ -1,5 +1,5 @@
 export async function get(){
-    const REQ = await fetch(`${window.location.origin}/backend/php/read.php`, {
+    const REQ = await fetch(`http://localhost:8070/dogs`, {
         method:"GET",
         headers:{
             "Content-type":"application/json"

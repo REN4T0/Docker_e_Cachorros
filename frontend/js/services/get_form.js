@@ -42,7 +42,7 @@ document.addEventListener('click', async e => {
             const DOG = new Dog(DOG_DATA);
             const RESPONSE = await Dog.post(DOG, "post");
 
-            if (RESPONSE.code == "200") {
+            if (!RESPONSE.code) {
                 console.log(RESPONSE);
 
                 // Limpando a tabela e gerando novamente.
@@ -60,15 +60,18 @@ document.addEventListener('click', async e => {
 
     // Deletando o registro do banco
     if (el.classList.contains("delete")) {
-        const RESPONSE = await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
+        // const RESPONSE = await del(el.id);
+        await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
+        clean_table();
+        show_dogs(await get());
 
-        if (RESPONSE.code === "200") {
-            console.log(RESPONSE);
-            clean_table();
-            show_dogs(await get());
-        } else {
-            console.log(RESPONSE);
-        }
+        // if (RESPONSE.code == "200") {
+        //     console.log(RESPONSE);
+        //     clean_table();
+        //     show_dogs(await get());
+        // } else {
+        //     console.log(RESPONSE);
+        // }
     }
 
     // Condicionais que definem a abertura e o fechamento do modal
@@ -90,7 +93,7 @@ document.addEventListener('click', async e => {
     
             const RESPONSE = await Dog.post(NEW_DOG, "update"); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
     
-            if (RESPONSE.code == "200") {
+            if (!RESPONSE.code) {
                 console.log(RESPONSE);
                 close_modal();
                 clean_table();

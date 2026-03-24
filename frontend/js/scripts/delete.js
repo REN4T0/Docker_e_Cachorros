@@ -1,11 +1,11 @@
 export async function del(id) {
-    const REQ = await fetch(`${window.location.origin}/backend/php/delete.php`,{
-        "method":"POST",
+    const REQ = await fetch(`http://localhost:8070/dogs/${id}`,{
+        "method":"DELETE",
         headers:{
             "Content-type":"application/json"
         },
-        body: JSON.stringify(id)
+        //body: JSON.stringify(id)
     });
 
-    return await REQ.json();
+    // return await REQ.json();
 }
