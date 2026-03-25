@@ -84,15 +84,15 @@ document.addEventListener('click', async e => {
 
         for (let input of INPUTS) DOG_DATA.push(input.value);
 
-        try{
+        try {
             checkNullForm(DOG_DATA);
             const ID = DOG_DATA.shift(); // Preservando o ID do registro
-    
+
             const NEW_DOG = new Dog(DOG_DATA); // Criando uma instância dos dados do cachorro que será atualizado
             NEW_DOG.id = ID; // Atualizando o objeto, inserindo o ID na instância gerada
-    
+
             const RESPONSE = await Dog.post(NEW_DOG, "update"); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
-    
+
             if (!RESPONSE.code) {
                 console.log(RESPONSE);
                 close_modal();
@@ -106,9 +106,12 @@ document.addEventListener('click', async e => {
         }
     }
 
-    if (el.classList.contains("search")) {
+    // Condição para permitir a pesquisa por cachorros
+    if (el.classList.contains("search") || el.classList.contains("search-icon")) {
         const SEARCH_ITEM = document.querySelector("#search").value;
-        const SEARCH_RES = await search_dogs({ search_item: SEARCH_ITEM });
+
+        // Se a pesquisa tiver um valor vazio, retornará a lista padrão de todos os cachorros na tabela do banco
+        const SEARCH_RES = SEARCH_ITEM != "" ? await search_dogs({ search_item: SEARCH_ITEM }) : await get();
 
         if (SEARCH_RES.length > 0) {
             console.log(SEARCH_RES);

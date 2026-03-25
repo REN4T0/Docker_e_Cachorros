@@ -1,0 +1,1 @@
+export const mainRoute = "http://localhost:8070/dogs";

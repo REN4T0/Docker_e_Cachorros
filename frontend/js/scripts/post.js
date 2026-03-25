@@ -1,3 +1,5 @@
+import { mainRoute } from "../services/route.js";
+
 export class Dog {
     constructor(dog_data) {
         this.breed = dog_data[0];
@@ -7,9 +9,9 @@ export class Dog {
 
     static async put(data) {
         console.log(data.id);
-        
+
         try {
-            const REQ = await fetch(`http://localhost:8070/dogs/${data.id}`, {
+            const REQ = await fetch(`${mainRoute}/${data.id}`, {
                 "method": "PUT",
                 headers: {
                     "Content-type": "application/json"
@@ -32,28 +34,23 @@ export class Dog {
     }
 
     static async post(data, operation) {
-        let route;
-
         try {
             if (operation == "post") {
-                route = `http://localhost:8070/dogs`;
-                // delete data.id;
-                console.log(data);
+                //console.log(data);
+
+                const REQ = await fetch(mainRoute, {
+                    "method": "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return await REQ.json();
             } else {
                 return await this.put(data);
-                //route = `http://${window.location.hostname}:${window.location.port}/backend/php/update.php`;
-                //data.id
             }
 
-            const REQ = await fetch(route, {
-                "method": "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-
-            return await REQ.json();
         } catch (err) {
             return {
                 code: "500",
