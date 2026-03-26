@@ -10,6 +10,8 @@ import { show_dogs } from "../assets/table.js";
 import { clean_table } from "../assets/table.js";
 // Funções de validações
 import { checkNullForm } from "./validations.js";
+// Função de telemetria
+import { getMetrics } from "../scripts/telemetry.js";
 
 // Assim que a página carregar, os registros do banco de dados serão consultado e exibidos na tela.
 window.addEventListener("load", async () => {
@@ -17,6 +19,7 @@ window.addEventListener("load", async () => {
 
     try {
         show_dogs(await get());
+        console.log(await getMetrics());
     } catch (err) {
         console.log(err);
     }
@@ -42,12 +45,13 @@ document.addEventListener('click', async e => {
             const DOG = new Dog(DOG_DATA);
             const RESPONSE = await Dog.post(DOG, "post");
 
-            if (!RESPONSE.code) {
+            if (RESPONSE.code === "200") {
                 console.log(RESPONSE);
 
                 // Limpando a tabela e gerando novamente.
                 clean_table();
                 show_dogs(await get());
+                console.log(await getMetrics());
 
             } else {
                 console.log(RESPONSE);
@@ -64,6 +68,7 @@ document.addEventListener('click', async e => {
         await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
         clean_table();
         show_dogs(await get());
+        console.log(await getMetrics());
 
         // if (RESPONSE.code == "200") {
         //     console.log(RESPONSE);
@@ -101,6 +106,8 @@ document.addEventListener('click', async e => {
             } else {
                 console.log(RESPONSE);
             }
+
+            console.log(await getMetrics());
         } catch (err) {
             console.log(err);
         }
@@ -120,5 +127,7 @@ document.addEventListener('click', async e => {
         } else {
             clean_table();
         }
+
+        console.log(await getMetrics());
     }
 });

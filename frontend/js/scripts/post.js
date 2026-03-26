@@ -8,8 +8,6 @@ export class Dog {
     }
 
     static async put(data) {
-        console.log(data.id);
-
         try {
             const REQ = await fetch(`${mainRoute}/${data.id}`, {
                 "method": "PUT",
