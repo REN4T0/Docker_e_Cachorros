@@ -65,7 +65,7 @@ document.addEventListener('click', async e => {
     // Deletando o registro do banco
     if (el.classList.contains("delete")) {
         // const RESPONSE = await del(el.id);
-        await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
+        console.log(await del(el.id)); // O id do registro é coletado por meio do atributo #id que está no elemento
         clean_table();
         show_dogs(await get());
         console.log(await getMetrics());
