@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,16 @@
     <script type="module" src="../js/services/get_form.js" defer></script>
     <title>Cadastrar cachorro</title>
 </head>
+
 <body>
     <form class="register_form">
         <a href="../../index.html">Voltar</a>
         <h1>Cadastrar cachorro</h1>
         <fieldset>
             <legend>Raça</legend>
-            <input type="text" name="breed" id="breed" placeholder="Ex: Golden Retriever" class="dog_info">
+            <select type="text" name="breed" id="breed" placeholder="Selecione a raça do cão" class="dog_info">
+                <option selected hidden>Selecione a raça do cachorro</option>
+            </select>
         </fieldset>
 
         <fieldset>
@@ -36,12 +40,14 @@
 
     <div>
     </div>
-    
+
     <table>
         <thead>
             <tr>
-                <td colspan="5"><input type="search" name="search" id="search" placeholder="Pesquise aqui pelo apelido..."></td>
-                <td><button class="search"><img src="../icons/search.svg" alt="ícone de pesquisa" class="search-icon"></button></td>
+                <td colspan="5"><input type="search" name="search" id="search"
+                        placeholder="Pesquise aqui pelo apelido..."></td>
+                <td><button class="search"><img src="../icons/search.svg" alt="ícone de pesquisa"
+                            class="search-icon"></button></td>
             </tr>
             <tr>
                 <th>ID</th>
@@ -53,4 +59,5 @@
         </thead>
     </table>
 </body>
+
 </html>

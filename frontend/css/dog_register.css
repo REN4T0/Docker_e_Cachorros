@@ -15,19 +15,20 @@
     gap: 1rem;
 }
 
-fieldset input, fieldset select {
+fieldset input,
+fieldset select {
     border: none;
     width: 100%;
     height: 100%;
     outline: none;
 }
 
-fieldset{
+fieldset {
     padding: 5px;
     border-radius: 5px;
 }
 
-legend{
+legend {
     padding: 0px 2px 0px 2px;
 }
 
@@ -39,16 +40,17 @@ button {
     cursor: pointer;
 }
 
-button.delete, button.edit{
+button.delete,
+button.edit {
     border-radius: 0;
     width: 100%;
 }
 
-button.delete{
+button.delete {
     background-color: #ae0000;
 }
 
-button.edit{
+button.edit {
     background-color: #0064c8;
 }
 
@@ -58,7 +60,9 @@ table {
     top: 5rem;
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid black;
     border-collapse: collapse;
 }
@@ -67,7 +71,7 @@ td {
     text-align: center;
 }
 
-button:hover{
+button:hover {
     opacity: 0.8;
 }
 
@@ -87,4 +91,3 @@ table button {
     width: 100%;
     border-radius: 0;
 }
-

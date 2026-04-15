@@ -12,7 +12,7 @@ export class Dog {
             const REQ = await fetch(`${mainRoute}/${data.id}`, {
                 "method": "PUT",
                 headers: {
-                    "Content-type": "application/json"
+                    "content-type": "application/json"
                 },
                 body: JSON.stringify({
                     breed: data.breed,
