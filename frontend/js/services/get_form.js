@@ -12,11 +12,11 @@ import { clean_table } from "../assets/table.js";
 import { checkNullForm } from "./validations.js";
 // Função de telemetria
 // import { getMetrics } from "../scripts/telemetry.js";
-import { getDogBreeds, listAllDogBreeds } from "./dog_breeds.js";
+import { getDogBreeds } from "./dog_breeds.js";
 
 // Assim que a página carregar, os registros do banco de dados serão consultado e exibidos na tela.
 window.addEventListener("load", async () => {
-    listAllDogBreeds(await getDogBreeds());
+    await getDogBreeds();
     clean_table();
 
     try {
@@ -66,19 +66,10 @@ document.addEventListener('click', async e => {
 
     // Deletando o registro do banco
     if (el.classList.contains("delete")) {
-        // const RESPONSE = await del(el.id);
         console.log(await del(el.id)); // O id do registro é coletado por meio do atributo #id que está no elemento
         clean_table();
         show_dogs(await get());
         // console.log(await getMetrics());
-
-        // if (RESPONSE.code == "200") {
-        //     console.log(RESPONSE);
-        //     clean_table();
-        //     show_dogs(await get());
-        // } else {
-        //     console.log(RESPONSE);
-        // }
     }
 
     // Condicionais que definem a abertura e o fechamento do modal
