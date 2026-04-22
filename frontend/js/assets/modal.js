@@ -1,4 +1,7 @@
-export function open_modal(id) {
+import { getDogBreeds } from "../services/dog_breeds.js";
+import { showBreedSelectOptions } from "./breed_options.js";
+
+export async function open_modal(id) {
     const INPUT_LABELS = ["", "Raça", "Apelido", "Gênero"];
     const INPUT_CLASSES = ["id", "breed", "surname", "gender"];
     const SLCT_OPTS = ["M", "F"];
@@ -31,29 +34,45 @@ export function open_modal(id) {
         INPUT.classList.add("updated_dog_info");
         INPUT.value = document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent;
 
-        if(INPUT_CLASSES[i] === "id") INPUT.setAttribute("readonly", "true");   
-        if(INPUT_CLASSES[i] === "id") INPUT.setAttribute("hidden", "true");   
+        if (INPUT_CLASSES[i] === "id") INPUT.setAttribute("readonly", "true");
+        if (INPUT_CLASSES[i] === "id") INPUT.setAttribute("hidden", "true");
 
-        if (i == 3) {
+        if (INPUT_CLASSES[i] === "breed" || INPUT_CLASSES[i] === "gender") {
             const SLCT_LABEL = document.createElement("label");
-            SLCT_LABEL.innerText = "Gênero";
-            const GNDR_SLCT = document.createElement("select");
-            GNDR_SLCT.classList.add("updated_dog_info");
+            SLCT_LABEL.innerText = INPUT_LABELS[i];
 
-            for (let c in SLCT_OPTS) {
-                const OPT = document.createElement('option');
-                SLCT_OPTS[c] == "M" ? OPT.innerText = "Macho" : OPT.innerText = "Fêmea";
-                OPT.value = SLCT_OPTS[c];
+            const SLCT = document.createElement("select");
+            SLCT.classList.add(`updated_dog_info`);
 
-                if (OPT.value == document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent) {
-                    OPT.setAttribute("selected", "true");
+            if (INPUT_CLASSES[i] === "breed") {
+                for (let index of await getDogBreeds()) {
+                    const OPT = document.createElement("option");
+                    OPT.innerText = index;
+                    OPT.value = index;
+
+                    if (OPT.value == document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent) {
+                        OPT.setAttribute("selected", "true");
+                    }
+
+                    SLCT.appendChild(OPT);
                 }
 
-                GNDR_SLCT.appendChild(OPT);
+            } else {
+                for (let c in SLCT_OPTS) {
+                    const OPT = document.createElement('option');
+                    SLCT_OPTS[c] == "M" ? OPT.innerText = "Macho" : OPT.innerText = "Fêmea";
+                    OPT.value = SLCT_OPTS[c];
+
+                    if (OPT.value == document.querySelector(`#dog${id} .${INPUT_CLASSES[i]}`).textContent) {
+                        OPT.setAttribute("selected", "true");
+                    }
+
+                    SLCT.appendChild(OPT);
+                }
             }
 
             MODAL_FORM.appendChild(SLCT_LABEL);
-            MODAL_FORM.appendChild(GNDR_SLCT);
+            MODAL_FORM.appendChild(SLCT);
 
         } else {
             MODAL_FORM.appendChild(LABEL);

@@ -1,7 +1,7 @@
 import { mainRoute } from "../services/route.js";
 
 export async function getMetrics() {
-    const REQ = await fetch(`${mainRoute}/telemetria`, {
+    const REQ = await fetch(`${mainRoute}/telemetry`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
