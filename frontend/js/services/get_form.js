@@ -8,6 +8,7 @@ import { open_modal } from "../assets/modal.js";
 import { close_modal } from "../assets/modal.js";
 import { show_dogs } from "../assets/table.js";
 import { clean_table } from "../assets/table.js";
+import { showAlert } from "../assets/alert.js";
 // Funções de validações
 import { checkNullForm } from "./validations.js";
 // Função de telemetria
@@ -18,15 +19,22 @@ import { showBreedSelectOptions } from "../assets/breed_options.js";
 
 // Assim que a página carregar, os registros do banco de dados serão consultado e exibidos na tela.
 window.addEventListener("load", async () => {
-    showBreedSelectOptions(await getDogBreeds());
-    clean_table();
-
     try {
-        show_dogs(await get());
-        console.log(await getMetrics());
+        showBreedSelectOptions(await getDogBreeds());
     } catch (err) {
         console.log(err);
+        showAlert(err);
     }
+    
+    try {
+        clean_table();
+        show_dogs(await get());
+    } catch (err) {
+        console.log(err);
+        showAlert(err);
+    }
+
+    console.log(await getMetrics());
 });
 
 document.addEventListener('click', async e => {
@@ -51,27 +59,39 @@ document.addEventListener('click', async e => {
 
             if (RESPONSE.code === "200") {
                 console.log(RESPONSE);
+                showAlert(RESPONSE);
 
                 // Limpando a tabela e gerando novamente.
                 clean_table();
                 clean_form(INPUTS);
                 show_dogs(await get());
-                console.log(await getMetrics());
-
+                
             } else {
                 console.log(RESPONSE);
+                showAlert(RESPONSE);
             }
-
+            
+            console.log(await getMetrics());
         } catch (err) {
             console.log(err);
+            showAlert(err);
         }
     }
 
     // Deletando o registro do banco
     if (el.classList.contains("delete")) {
-        console.log(await del(el.id)); // O id do registro é coletado por meio do atributo #id que está no elemento
-        clean_table();
-        show_dogs(await get());
+        try {
+            const RESPONSE = await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
+            console.log(RESPONSE);
+            showAlert(RESPONSE);
+            clean_table();
+            show_dogs(await get());
+
+        } catch (err) {
+            console.log(err);
+            showAlert(err);
+        }
+
         console.log(await getMetrics());
     }
 
@@ -96,32 +116,41 @@ document.addEventListener('click', async e => {
 
             if (RESPONSE.code === "200") {
                 console.log(RESPONSE);
+                showAlert(RESPONSE);
                 close_modal();
                 clean_table();
                 show_dogs(await get());
             } else {
                 console.log(RESPONSE);
+                showAlert(RESPONSE);
             }
 
-            console.log(await getMetrics());
         } catch (err) {
             console.log(err);
+            showAlert(err);
         }
+
+        console.log(await getMetrics());
     }
 
     // Condição para permitir a pesquisa por cachorros
     if (el.classList.contains("search") || el.classList.contains("search-icon")) {
         const SEARCH_ITEM = document.querySelector("#search").value;
 
-        // Se a pesquisa tiver um valor vazio, retornará a lista padrão de todos os cachorros na tabela do banco
-        const SEARCH_RES = SEARCH_ITEM != "" ? await search_dogs({ search_item: SEARCH_ITEM }) : await get();
-
-        if (SEARCH_RES.length > 0) {
-            console.log(SEARCH_RES);
-            clean_table();
-            show_dogs(SEARCH_RES);
-        } else {
-            clean_table();
+        try {
+            // Se a pesquisa tiver um valor vazio, retornará a lista padrão de todos os cachorros na tabela do banco
+            const SEARCH_RES = SEARCH_ITEM != "" ? await search_dogs({ search_item: SEARCH_ITEM }) : await get();
+    
+            if (SEARCH_RES.length > 0) {
+                console.log(SEARCH_RES);
+                clean_table();
+                show_dogs(SEARCH_RES);
+            } else {
+                clean_table();
+            }
+        } catch (err) {
+            console.log(err);
+            showAlert(err);
         }
 
         console.log(await getMetrics());
