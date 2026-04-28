@@ -13,12 +13,12 @@
 
 <body>
     <form class="register_form">
-        <a href="../../index.html">Voltar</a>
+        <a href="#" class="back-to-index">Voltar</a>
         <h1>Cadastrar cachorro</h1>
         <fieldset>
             <legend>Raça</legend>
             <select type="text" name="breed" id="breed" placeholder="Selecione a raça do cão" class="dog_info breed">
-                <option hidden>Selecione a raça do cachorro</option>
+                <option value="" hidden>Selecione a raça do cachorro</option>
             </select>
         </fieldset>
 
@@ -30,7 +30,7 @@
         <fieldset>
             <legend>Gênero</legend>
             <select name="gender" id="gender" class="dog_info">
-                <option hidden>Informe o gênero do cachorro</option>
+                <option value="" hidden>Informe o gênero do cachorro</option>
                 <option value="M">Macho</option>
                 <option value="F">Fêmea</option>
             </select>
@@ -49,7 +49,7 @@
     <table>
         <thead>
             <tr>
-                <td colspan="5"><input type="search" name="search" id="search"
+                <td colspan="5"><input type="text" name="search" id="search"
                         placeholder="Pesquise aqui pelo apelido..."></td>
                 <td><button class="search"><img src="../icons/search.svg" alt="ícone de pesquisa"
                             class="search-icon"></button></td>

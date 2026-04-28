@@ -5,8 +5,9 @@
     right: -25rem;
     z-index: 3;
 
-    width: 20rem;
+    width: 19rem;
     height: 10rem;
+    padding: 1rem;
     border-radius: 10px;
 
     box-shadow: 5px 5px 10px 1px #0000007e;

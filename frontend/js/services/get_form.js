@@ -155,4 +155,8 @@ document.addEventListener('click', async e => {
 
         console.log(await getMetrics());
     }
+
+    if(el.classList.contains("back-to-index")) {
+        window.location.href = "http://localhost:8081/index.html";
+    }
 });
