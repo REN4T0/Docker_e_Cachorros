@@ -64,6 +64,23 @@ table {
     top: 5rem;
 }
 
+.delete-modal-table {
+    position: unset;
+    margin: 1rem 0rem 1rem 0rem;
+}
+
+.flex-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.remove {
+    background-color: #ae0000;
+    color: #fff;
+}
+
 table,
 th,
 td {

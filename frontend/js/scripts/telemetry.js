@@ -1,4 +1,4 @@
-import { mainRoute } from "../services/route.js";
+import { mainRoute } from "../routes/route.js";
 
 export async function getMetrics() {
     const REQ = await fetch(`${mainRoute}/telemetry`, {

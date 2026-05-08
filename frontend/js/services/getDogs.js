@@ -1,6 +1,6 @@
-import { mainRoute } from "../services/route.js";
+import { mainRoute } from "../routes/route.js";
 
-export async function get() {
+export async function getDogs() {
     const REQ = await fetch(mainRoute, {
         method: "GET",
     });

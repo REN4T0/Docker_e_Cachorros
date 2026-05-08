@@ -1,6 +1,6 @@
-import { mainRoute } from "../services/route.js";
+import { mainRoute } from "../routes/route.js";
 
-export async function del(id) {
+export async function deleteDog(id) {
     const REQ = await fetch(`${mainRoute}/${id}`, { "method": "DELETE", });
     return await REQ.json();
 }

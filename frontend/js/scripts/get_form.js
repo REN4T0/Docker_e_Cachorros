@@ -1,18 +1,19 @@
 // Funções de interação com o banco de dados
-import { Dog } from "../scripts/post.js";
-import { del } from "../scripts/delete.js";
-import { get } from "../scripts/get.js";
-import { search_dogs } from "../scripts/search.js";
+import { Dog } from "../classes/Dog.js";
+import { deleteDog } from "../services/deleteDog.js";
+import { getDogs } from "../services/getDogs.js";
+import { searchDog } from "../services/searchDog.js";
+import { postDog } from "../services/postDog.js";
+import { putDog } from "../services/putDog.js";
 // Funções de exibição de dados
-import { open_modal } from "../assets/modal.js";
-import { close_modal } from "../assets/modal.js";
+import { open_modal, close_modal } from "../assets/modal.js";
 import { show_dogs } from "../assets/table.js";
 import { clean_table } from "../assets/table.js";
 import { showAlert } from "../assets/alert.js";
 // Funções de validações
-import { checkNullForm } from "./validations.js";
+import { checkNullForm } from "../validator/validations.js";
 // Função de telemetria
-import { getMetrics } from "../scripts/telemetry.js";
+import { getMetrics } from "./telemetry.js";
 import { getDogBreeds } from "./dog_breeds.js";
 import { clean_form } from "../assets/clear_form.js";
 import { showBreedSelectOptions } from "../assets/breed_options.js";
@@ -25,10 +26,10 @@ window.addEventListener("load", async () => {
         console.log(err);
         showAlert(err);
     }
-    
+
     try {
         clean_table();
-        show_dogs(await get());
+        show_dogs(await getDogs());
     } catch (err) {
         console.log(err);
         showAlert(err);
@@ -55,7 +56,7 @@ document.addEventListener('click', async e => {
 
             // Criando uma instância do cachorro cadastrado e enviando para a função estática que vai mandar os dados para o banco
             const DOG = new Dog(DOG_DATA);
-            const RESPONSE = await Dog.post(DOG, "post");
+            const RESPONSE = await postDog(DOG);
 
             if (RESPONSE.code === "200") {
                 console.log(RESPONSE);
@@ -64,13 +65,13 @@ document.addEventListener('click', async e => {
                 // Limpando a tabela e gerando novamente.
                 clean_table();
                 clean_form(INPUTS);
-                show_dogs(await get());
-                
+                show_dogs(await getDogs());
+
             } else {
                 console.log(RESPONSE);
                 showAlert(RESPONSE);
             }
-            
+
             console.log(await getMetrics());
         } catch (err) {
             console.log(err);
@@ -78,14 +79,18 @@ document.addEventListener('click', async e => {
         }
     }
 
-    // Deletando o registro do banco
-    if (el.classList.contains("delete")) {
+    // Ativando o modal que confirma se o usuário realmente quer deletar o registro...
+    if (el.classList.contains("delete")) open_modal(el.id, "delete");
+
+    // Confirmação da exclusão do registro
+    if (el.classList.contains("remove")) {
         try {
-            const RESPONSE = await del(el.id); // O id do registro é coletado por meio do atributo #id que está no elemento
+            const RESPONSE = await deleteDog(el.id); // O ID do registro é coletado por meio do atributo #id que está no elemento
             console.log(RESPONSE);
+            close_modal();
             showAlert(RESPONSE);
             clean_table();
-            show_dogs(await get());
+            show_dogs(await getDogs());
 
         } catch (err) {
             console.log(err);
@@ -96,8 +101,8 @@ document.addEventListener('click', async e => {
     }
 
     // Condicionais que definem a abertura e o fechamento do modal
-    if (el.classList.contains("edit")) open_modal(el.id);
-    if (el.classList.contains("close") || el.classList.contains("close_icon")) close_modal();
+    if (el.classList.contains("edit")) open_modal(el.id, "edit");
+    if (el.classList.contains("close") || el.classList.contains("close_icon") || el.classList.contains("cancel")) close_modal();
 
     if (el.classList.contains("update")) {
         const DOG_DATA = new Array();
@@ -112,14 +117,14 @@ document.addEventListener('click', async e => {
             const NEW_DOG = new Dog(DOG_DATA); // Criando uma instância dos dados do cachorro que será atualizado
             NEW_DOG.id = ID; // Atualizando o objeto, inserindo o ID na instância gerada
 
-            const RESPONSE = await Dog.post(NEW_DOG, "update"); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
+            const RESPONSE = await putDog(NEW_DOG); // Enviando para o método estático que envia dados para serem inseridas no banco de dados
 
             if (RESPONSE.code === "200") {
                 console.log(RESPONSE);
                 showAlert(RESPONSE);
                 close_modal();
                 clean_table();
-                show_dogs(await get());
+                show_dogs(await getDogs());
             } else {
                 console.log(RESPONSE);
                 showAlert(RESPONSE);
@@ -139,8 +144,8 @@ document.addEventListener('click', async e => {
 
         try {
             // Se a pesquisa tiver um valor vazio, retornará a lista padrão de todos os cachorros na tabela do banco
-            const SEARCH_RES = SEARCH_ITEM != "" ? await search_dogs({ search_item: SEARCH_ITEM }) : await get();
-    
+            const SEARCH_RES = SEARCH_ITEM != "" ? await searchDog({ search_item: SEARCH_ITEM }) : await getDogs();
+
             if (SEARCH_RES.length > 0) {
                 console.log(SEARCH_RES);
                 clean_table();
@@ -156,7 +161,7 @@ document.addEventListener('click', async e => {
         console.log(await getMetrics());
     }
 
-    if(el.classList.contains("back-to-index")) {
+    if (el.classList.contains("back-to-index")) {
         window.location.href = "http://localhost:8081/index.html";
     }
 });
